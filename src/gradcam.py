@@ -36,6 +36,7 @@ import argparse
 import csv
 import os
 
+# pyrefly: ignore [missing-import]
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -57,7 +58,7 @@ GRADCAM_LAYER_NAME = "conv_pw_13_relu"
 X_TEST_PATH = "DATA/task2_damage_state_1/task2_X_test.npy"
 Y_TEST_PATH = "DATA/task2_damage_state_1/task2_y_test.npy"
 
-CLASS_NAMES = ["undamaged", "damaged"]
+CLASS_NAMES = ["damaged", "undamaged"]
 
 
 # ============================================================
