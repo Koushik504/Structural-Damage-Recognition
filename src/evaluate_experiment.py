@@ -50,7 +50,7 @@ from sklearn.metrics import (
 X_TEST_PATH = "DATA/task2_damage_state_1/task2_X_test.npy"
 Y_TEST_PATH = "DATA/task2_damage_state_1/task2_y_test.npy"
 
-CLASS_NAMES = ["undamaged", "damaged"]
+CLASS_NAMES = ["damaged", "undamaged"]
 
 # Baseline reference for delta reporting
 BASELINE_ACCURACY  = 0.7678

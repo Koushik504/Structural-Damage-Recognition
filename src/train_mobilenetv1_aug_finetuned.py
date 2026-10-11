@@ -81,7 +81,7 @@ VALIDATION_SIZE = 0.1
 RANDOM_STATE    = 42
 
 # --- Training hyper-parameters ---
-BATCH_SIZE = 32
+BATCH_SIZE = 8
 
 WARMUP_EPOCHS    = 3
 WARMUP_LR        = 1e-4
