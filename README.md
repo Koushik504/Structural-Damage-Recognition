@@ -79,8 +79,8 @@ The original **1,460 test samples remain completely separate** and are used only
 
 | Class | Samples |
 |---|---:|
-| Undamaged | 745 |
-| Damaged | 715 |
+| Damaged (Class 0) | 745 |
+| Undamaged (Class 1) | 715 |
 
 The stratified split preserves the relative class distribution between training and validation data.
 
@@ -513,7 +513,7 @@ The original six-model comparison and its Best Model section below remain histor
 ---
 # Best Model
 
-MobileNetV1 achieved the strongest overall test performance.
+MobileNetV1 was the best-performing model among the original six baseline configurations. After completing the six accuracy-improvement experiments, EfficientNetB0 (Experiment 4) achieved the best overall performance, with 87.26% test accuracy and 86.99% F1-score.
 
 ```text
 Accuracy  : 76.78%
@@ -522,13 +522,13 @@ Recall    : 80.28%
 F1-score  : 77.20%
 ```
 
-It also achieved the highest recall among the evaluated models:
+Among the original six baseline configurations, MobileNetV1 also achieved the highest recall for Class 1 (Undamaged):
 
 ```text
 Recall = 80.28%
 ```
 
-This means MobileNetV1 correctly identified a larger proportion of damaged samples than the other evaluated configurations.
+Among the original six baseline configurations, MobileNetV1 achieved the highest recall for Class 1 (Undamaged), at 80.28%. This metric measures how many actual undamaged images were correctly classified.
 
 ---
 
@@ -881,17 +881,16 @@ The experiments demonstrate that model performance depends strongly on:
 - Classifier choice
 - Generalization to unseen test images
 
-In the current evaluation, MobileNetV1 produced the strongest overall test performance.
-
+In the original six-model baseline evaluation, MobileNetV1 produced the strongest test performance. Across the six subsequent accuracy-improvement experiments, EfficientNetB0 (Experiment 4) achieved the best overall performance, with 87.26% test accuracy and 86.99% F1-score.
 ---
 
 # Key Findings
 
 The major findings are:
 
-1. **MobileNetV1 achieved the best overall performance**, with 76.78% accuracy and 77.20% F1-score.
+1. **MobileNetV1 was the best-performing original baseline model**, with 76.78% accuracy and 77.20% F1-score. After the six improvement experiments, **EfficientNetB0 (Experiment 4)** achieved the highest overall performance, with 87.26% accuracy and 86.99% F1-score.
 
-2. **MobileNetV1 achieved the highest recall**, at 80.28%, making it the strongest model for identifying damaged samples among the evaluated configurations.
+2. **MobileNetV1 achieved the highest Undamaged-class recall among the original six baseline models**, at 80.28%, meaning it correctly identified the largest proportion of actual undamaged images in that comparison.
 
 3. The standard **RBF-SVM achieved 65.96% accuracy** using 2048-dimensional InceptionV3 Global Average Pooling features.
 
@@ -907,11 +906,11 @@ The major findings are:
 
 # Conclusion
 
-This project evaluated six machine learning and deep learning configurations for binary structural damage recognition.
+This project evaluated six original machine learning and deep learning configurations for binary structural damage recognition, followed by six additional accuracy-improvement experiments.
 
 The evaluated approaches included classical machine learning classifiers using deep CNN features, transfer-learning-based CNN models, and an intermediate InceptionV3 feature-based SVM.
 
-Among the six evaluated configurations, **MobileNetV1 achieved the strongest overall performance**:
+Among the original six baseline configurations, **MobileNetV1 achieved the strongest performance**. However, after completing the six additional experiments, **EfficientNetB0 (Experiment 4) emerged as the best overall model**, achieving 87.26% test accuracy and 86.99% F1-score.
 
 ```text
 Accuracy  : 76.78%
@@ -930,13 +929,13 @@ The completed experiments establish a reproducible baseline for the project and 
 
 Potential future extensions include:
 
-- Grad-CAM-based visual explainability for CNN predictions.
+- Further analysis of Grad-CAM visualizations and region-focused model predictions.
 - Detailed visualization of false-positive and false-negative samples.
 - Analysis of image regions influencing model decisions.
 - Investigation of structural textures and damage-specific visual patterns.
 - Evaluation of additional CNN architectures.
 - Investigation of alternative feature representations.
-- Ensemble-based classification approaches.
+- Explore additional ensemble strategies beyond the completed MobileNetV1 + InceptionV3 weighted ensemble (Experiment 6).
 
 ---
 
@@ -956,5 +955,7 @@ Potential future extensions include:
 | Model comparison | Complete |
 | Evaluation | Complete |
 | Baseline documentation | Complete |
+| Accuracy improvement experiments (1–6) | Complete |
+| Final experiment comparison and documentation | Complete |
 
-**Baseline experiments are complete and the final results are frozen.**
+**All six baseline configurations and six additional accuracy-improvement experiments are complete. The final results are documented in `results/README.md`, with EfficientNetB0 (Experiment 4) achieving the best overall performance.**
