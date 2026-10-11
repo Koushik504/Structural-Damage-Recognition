@@ -35,7 +35,7 @@ VALIDATION_SIZE = 0.1
 RANDOM_STATE = 42
 
 BATCH_SIZE = 32
-EPOCHS = 30
+EPOCHS = 15
 LR = 1e-4
 PATIENCE = 5
 
@@ -72,6 +72,18 @@ class RegionGenerator(tf.keras.utils.Sequence):
     def on_epoch_end(self):
         if self.shuffle:
             np.random.shuffle(self.indices)
+
+
+class PhaseEpochLogger(tf.keras.callbacks.Callback):
+    """Logs current phase, epoch number, and max epochs clearly."""
+
+    def __init__(self, phase_name, total_epochs):
+        super().__init__()
+        self.phase_name = phase_name
+        self.total_epochs = total_epochs
+
+    def on_epoch_begin(self, epoch, logs=None):
+        print(f"\n[{self.phase_name}] Epoch {epoch + 1}/{self.total_epochs}")
 
 
 def main():
@@ -159,11 +171,12 @@ def main():
     model.summary()
 
     print(f"\n{'=' * 60}")
-    print(f"Training Option C center-crop model (LR={LR:.0e}, max {EPOCHS} epochs)")
+    print(f"Phase 1: Training Option C center-crop model (LR={LR:.0e}, max {EPOCHS} epochs)")
     print(f"Saving separately to: {OUTPUT_MODEL_PATH}")
     print(f"{'=' * 60}")
 
     callbacks = [
+        PhaseEpochLogger("Phase 1: Grad-CAM Region Training", EPOCHS),
         tf.keras.callbacks.ModelCheckpoint(
             OUTPUT_MODEL_PATH,
             monitor="val_loss",
