@@ -227,4 +227,50 @@ Spatially focused training utilizing multi-crop extraction informed by visual ac
 - **Experiment 1**: Achieved the highest accuracy (77.67%) and precision (77.75%) among evaluated MobileNetV1 variants, but sacrifices recall (-4.06%).
 - **Experiment 3**: Did not improve overall metrics compared to the baseline, demonstrating that uniform multi-crop regional focus alone is insufficient for improving damage classification.
 
+---
 
+## Final Comparison of All Six Accuracy Improvement Experiments
+
+All six experiments were evaluated using the same held-out test set of **1,460 structural images**. The original MobileNetV1 model serves as the baseline.
+
+### Complete Test Performance
+
+| Model | Accuracy | Precision | Recall | F1-score |
+|---|---:|---:|---:|---:|
+| MobileNetV1 Baseline | 76.78% | 74.35% | 80.28% | 77.20% |
+| Experiment 1 — MobileNetV1 Fine-Tuning | 77.67% | 77.75% | 76.22% | 76.98% |
+| Experiment 2 — Data Augmentation + Fine-Tuning | 77.33% | 77.35% | 75.94% | 76.64% |
+| Experiment 3 — Grad-CAM Region Training | 75.62% | 73.84% | 77.76% | 75.75% |
+| **Experiment 4 — EfficientNetB0** | **87.26%** | 86.99% | **86.99%** | **86.99%** |
+| Experiment 5 — EfficientNetB0 Fine-Tuning | **87.26%** | **87.95%** | 85.73% | 86.83% |
+| Experiment 6 — Weighted Ensemble | 77.40% | 75.50% | 79.72% | 77.55% |
+
+**Note:** Precision, recall, and F1-score use class 1 (Undamaged) as the positive class. Class 0 represents Damaged images.
+
+### Accuracy Improvement Over Baseline
+
+| Experiment | Accuracy Change |
+|---|---:|
+| Experiment 1 | +0.89 percentage points |
+| Experiment 2 | +0.55 percentage points |
+| Experiment 3 | -1.16 percentage points |
+| Experiment 4 | **+10.48 percentage points** |
+| Experiment 5 | **+10.48 percentage points** |
+| Experiment 6 | +0.62 percentage points |
+
+### Key Findings
+
+- **Experiment 4 (EfficientNetB0)** achieved the best overall performance, with 87.26% test accuracy and 86.99% F1-score.
+- **Experiment 5 (EfficientNetB0 Fine-Tuning)** matched Experiment 4's accuracy and achieved the highest precision (87.95%), but its F1-score was slightly lower.
+- **Experiment 1** improved MobileNetV1 accuracy through partial fine-tuning, although recall and F1-score decreased.
+- **Experiment 2** produced a modest accuracy improvement using data augmentation and fine-tuning.
+- **Experiment 3** performed below the baseline, indicating that the region-focused training approach did not improve classification performance in this experiment.
+- **Experiment 6** improved slightly over the MobileNetV1 baseline using a weighted combination of MobileNetV1 and InceptionV3 predictions.
+
+### Final Conclusion
+
+The experiments demonstrate that the choice of model architecture had a greater impact on classification accuracy than the tested fine-tuning, augmentation, region-focused training, and ensemble strategies.
+
+**EfficientNetB0 (Experiment 4) is the recommended final model**, achieving **87.26% accuracy**, an improvement of **10.48 percentage points** over the original MobileNetV1 baseline.
+
+The baseline models and their historical evaluation results remain preserved for reproducibility and comparison.
