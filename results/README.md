@@ -142,92 +142,89 @@ The results suggest that the lightweight MobileNetV1 architecture was able to le
 
 ## Accuracy Improvement Experiments
 
-Three controlled experiments designed to push beyond the **76.78% baseline**.
+Controlled experiments designed to explore improvements over the **76.78% baseline** MobileNetV1 model.
+
+The baseline model (`models/mobilenetv1.keras`) remains unchanged.
 
 ### Experiment 1 — MobileNetV1 Fine-Tuning
 
-| Property             | Value                                        |
-|----------------------|----------------------------------------------|
-| Script               | `src/train_mobilenetv1_finetuned.py`         |
-| Output model         | `models/mobilenetv1_finetuned.keras`         |
-| Phase 1 (warm-up)    | 3 epochs, LR=1e-4, backbone frozen           |
-| Phase 2 (fine-tune)  | max 30 epochs, LR=1e-5, conv_dw_12+ unfrozen |
-| EarlyStopping        | patience=5, monitor=val_loss                 |
-| Hypothesis           | Partial backbone fine-tuning improves feature adaptation |
+Partial fine-tuning of top layers in the MobileNetV1 backbone to adapt high-level convolutional features.
 
-**Run command:**
-```powershell
-python -m src.train_mobilenetv1_finetuned
-python -m src.evaluate_experiment --model models/mobilenetv1_finetuned.keras --results results/finetuning/mobilenetv1_finetuned_results.json
-```
+- **Hypothesis**: Partial backbone fine-tuning improves feature adaptation to structural damage patterns.
+- **Model Path**: `models/mobilenetv1_finetuned.keras`
+- **Training Script**: `src/train_mobilenetv1_finetuned.py`
+- **Training History**: `results/training/mobilenetv1_finetuned_history.csv`
+- **Evaluation JSON**: `results/finetuning/mobilenetv1_finetuned_test_results.json`
+- **Configuration**:
+  - Phase 1 (warm-up): 3 epochs, LR = 1e-4, backbone frozen
+  - Phase 2 (fine-tune): up to 30 epochs, LR = 1e-5, `conv_dw_12` and subsequent layers unfrozen
+  - EarlyStopping: patience = 5, monitor = `val_loss`
 
-| Metric    | Baseline | Exp 1  | Δ   |
-|-----------|----------|--------|-----|
-| Accuracy  | 76.78%   | TBD    | TBD |
-| Precision | 74.35%   | TBD    | TBD |
-| Recall    | 80.28%   | TBD    | TBD |
-| F1        | 77.20%   | TBD    | TBD |
+#### Verified Test Results (1,460 samples)
+- **Accuracy**: 77.6712% (77.67%)
+- **Precision**: 77.7461% (77.75%)
+- **Recall**: 76.2238% (76.22%)
+- **F1-score**: 76.9774% (76.98%)
+- **Confusion Matrix**: `[[589, 156], [170, 545]]`
 
----
+#### Delta vs. Baseline
+- Accuracy: **+0.89 percentage points**
+- Precision: **+3.40 percentage points**
+- Recall: **-4.06 percentage points**
+- F1-score: **-0.22 percentage points**
 
-### Experiment 2 — Data Augmentation + Fine-Tuning
-
-| Property             | Value                                            |
-|----------------------|--------------------------------------------------|
-| Script               | `src/train_mobilenetv1_aug_finetuned.py`         |
-| Output model         | `models/mobilenetv1_aug_finetuned.keras`         |
-| Augmentation         | Flip, ±10° rotation, ±5% shift, 90-110% zoom, brightness 80-120%, channel shift ±15 |
-| Phase 1 (warm-up)    | 3 epochs, LR=1e-4, backbone frozen              |
-| Phase 2 (fine-tune)  | max 30 epochs, LR=1e-5, conv_dw_12+ unfrozen   |
-| Hypothesis           | Augmentation reduces overfitting, augments Exp 1 gains |
-
-**Run command:**
-```powershell
-python -m src.train_mobilenetv1_aug_finetuned
-python -m src.evaluate_experiment --model models/mobilenetv1_aug_finetuned.keras --results results/augmentation/mobilenetv1_aug_finetuned_results.json
-```
-
-| Metric    | Baseline | Exp 2  | Δ   |
-|-----------|----------|--------|-----|
-| Accuracy  | 76.78%   | TBD    | TBD |
-| Precision | 74.35%   | TBD    | TBD |
-| Recall    | 80.28%   | TBD    | TBD |
-| F1        | 77.20%   | TBD    | TBD |
+*Interpretation*: Experiment 1 achieves higher overall accuracy (+0.89%) and precision (+3.40%) compared to the baseline, but exhibits a modest trade-off with lower recall (-4.06%) and slightly lower F1-score (-0.22%).
 
 ---
 
-### Experiment 3 — Grad-CAM Region Training
+### Experiment 3 — Grad-CAM Region-Focused MobileNetV1
 
-| Property             | Value                                              |
-|----------------------|----------------------------------------------------|
-| Grad-CAM script      | `src/gradcam.py`                                   |
-| Preprocessing script | `src/region_focused_preprocessing.py`              |
-| Training script      | `src/train_gradcam_region_model.py`                |
-| Output model         | `models/mobilenetv1_gradcam_region.keras`          |
-| Crops per image      | 5 (centre + 4 corners, 160×160 → 224×224)         |
-| Training samples     | 10630 × 5 = 53 150                                 |
-| Target layer         | `conv_pw_13_relu`                                  |
-| Hypothesis           | Multi-crop training from spatially-varied regions improves accuracy |
+Spatially focused training utilizing multi-crop extraction informed by visual activation regions.
 
-**Run commands (in order):**
-```powershell
-# Step 1 – Grad-CAM audit
-python -m src.gradcam --model models/mobilenetv1.keras --n 50 --outdir results/gradcam_region/heatmaps --seed 42
+- **Hypothesis**: Multi-crop training from spatially-varied regions improves localization and recognition accuracy.
+- **Model Path**: `models/mobilenetv1_gradcam_region.keras`
+- **Grad-CAM Audit Script**: `src/gradcam.py`
+- **Preprocessing Script**: `src/region_focused_preprocessing.py`
+- **Training Script**: `src/train_gradcam_region_model.py`
+- **Evaluation Script**: `src/evaluate_experiment.py`
+- **Training History**: `results/gradcam_region/mobilenetv1_gradcam_region_history.csv`
+- **Evaluation JSON**: `results/gradcam_region/mobilenetv1_gradcam_region_results.json`
+- **Configuration**:
+  - Crops per image: 5 (centre + 4 corners, 160×160 resized to 224×224)
+  - Target layer for Grad-CAM audit: `conv_pw_13_relu`
+  - Training completed across 15 epochs
 
-# Step 2 – Build region dataset (~15-40 min)
-python -m src.region_focused_preprocessing --outdir results/gradcam_region/preprocessed
+#### Verified Test Results (1,460 samples)
+- **Accuracy**: 75.6164% (75.62%)
+- **Precision**: 73.8380% (73.84%)
+- **Recall**: 77.7622% (77.76%)
+- **F1-score**: 75.7493% (75.75%)
+- **Confusion Matrix**: `[[548, 197], [159, 556]]`
+- **Inference Time**: 113.13 seconds
 
-# Step 3 – Train
-python -m src.train_gradcam_region_model
+#### Delta vs. Baseline
+- Accuracy: **-1.16 percentage points**
+- Precision: **-0.51 percentage points**
+- Recall: **-2.52 percentage points**
+- F1-score: **-1.45 percentage points**
 
-# Step 4 – Evaluate
-python -m src.evaluate_experiment --model models/mobilenetv1_gradcam_region.keras --results results/gradcam_region/mobilenetv1_gradcam_region_results.json
-```
+*Interpretation*: Experiment 3 does not outperform the baseline on any of the four evaluated classification metrics. Training on cropped regions introduced border context loss and spatial artifacting that degraded general classification performance.
 
-| Metric    | Baseline | Exp 3  | Δ   |
-|-----------|----------|--------|-----|
-| Accuracy  | 76.78%   | TBD    | TBD |
-| Precision | 74.35%   | TBD    | TBD |
-| Recall    | 80.28%   | TBD    | TBD |
-| F1        | 77.20%   | TBD    | TBD |
+---
+
+### Results Comparison Table
+
+| Metric | Baseline | Experiment 1 | Experiment 3 |
+|---|---:|---:|---:|
+| Accuracy | 76.78% | 77.67% | 75.62% |
+| Precision | 74.35% | 77.75% | 73.84% |
+| Recall | 80.28% | 76.22% | 77.76% |
+| F1-score | 77.20% | 76.98% | 75.75% |
+| Test samples | 1,460 | 1,460 | 1,460 |
+
+### Summary & Limitations
+- **Baseline Integrity**: The baseline MobileNetV1 model (`models/mobilenetv1.keras`) remains completely unchanged.
+- **Experiment 1**: Achieved the highest accuracy (77.67%) and precision (77.75%) among evaluated MobileNetV1 variants, but sacrifices recall (-4.06%).
+- **Experiment 3**: Did not improve overall metrics compared to the baseline, demonstrating that uniform multi-crop regional focus alone is insufficient for improving damage classification.
+
 

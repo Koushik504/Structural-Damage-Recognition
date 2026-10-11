@@ -1,0 +1,33 @@
+{
+    "model_path": "models/mobilenetv1_gradcam_region.keras",
+    "test_images": 1460,
+    "baseline": {
+        "accuracy": 0.7678,
+        "precision": 0.7435,
+        "recall": 0.8028,
+        "f1_score": 0.772
+    },
+    "experiment": {
+        "accuracy": 0.7561643835616438,
+        "precision": 0.7383798140770252,
+        "recall": 0.7776223776223776,
+        "f1_score": 0.7574931880108992
+    },
+    "delta_vs_baseline": {
+        "accuracy": -0.0116,
+        "precision": -0.0051,
+        "recall": -0.0252,
+        "f1_score": -0.0145
+    },
+    "confusion_matrix": [
+        [
+            548,
+            197
+        ],
+        [
+            159,
+            556
+        ]
+    ],
+    "inference_time_s": 113.13
+}

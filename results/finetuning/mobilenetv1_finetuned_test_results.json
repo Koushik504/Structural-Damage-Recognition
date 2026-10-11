@@ -1,0 +1,18 @@
+{
+  "accuracy": 0.7767123287671233,
+  "precision": 0.7774607703281027,
+  "recall": 0.7622377622377622,
+  "f1": 0.769774011299435,
+  "confusion_matrix": [
+    [
+      589,
+      156
+    ],
+    [
+      170,
+      545
+    ]
+  ],
+  "model": "models\\mobilenetv1_finetuned.keras",
+  "test_samples": 1460
+}
