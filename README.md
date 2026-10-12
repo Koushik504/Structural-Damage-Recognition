@@ -464,15 +464,76 @@ All models are evaluated on the same held-out test set.
 
 ---
 
-# Additional Experiments (4�6)
+# Additional Experiments (1–6)
 
 These experiments extend the original six-model baseline. All test results use the same held-out test set of 1,460 images (745 damaged and 715 undamaged). Precision, recall, and F1-score refer to the Undamaged class (label 1).
 
+
 | Experiment | Test Accuracy | Precision | Recall | F1-score |
 |---|---:|---:|---:|---:|
-| 4. EfficientNetB0 Transfer Learning | 87.26% | 86.99% | 86.99% | 86.99% |
-| 5. EfficientNetB0 Fine-Tuning | 87.26% | 87.95% | 85.73% | 86.83% |
+| 1. MobileNetV1 Fine-Tuning | 77.67% | 77.75% | 76.22% | 76.98% |
+| 2. Augmentation + Fine-Tuning | 77.33% | 77.35% | 75.94% | 76.64% |
+| 3. Grad-CAM Region-Focused | 75.62% | 73.84% | 77.76% | 75.75% |
+| 4. EfficientNetB0 Transfer Learning | **87.26%** | 86.99% | 86.99% | **86.99%** |
+| 5. EfficientNetB0 Fine-Tuning | **87.26%** | **87.95%** | 85.73% | 86.83% |
 | 6. MobileNetV1 + InceptionV3 Weighted Ensemble | 77.40% | 75.50% | 79.72% | 77.55% |
+
+## Experiment 1: MobileNetV1 Fine-Tuning
+
+This experiment investigated whether fine-tuning MobileNetV1 could improve performance over the original frozen-backbone baseline.
+
+The fine-tuned model achieved the following results on the independent test dataset:
+
+- **Test accuracy:** 77.67%
+- **Precision:** 77.75%
+- **Recall:** 76.22%
+- **F1-score:** 76.98%
+- **Results:** `results/finetuning/mobilenetv1_finetuned_test_results.json`
+
+Compared with the original MobileNetV1 baseline accuracy of 76.78%, fine-tuning improved accuracy by 0.89 percentage points.
+
+---
+
+## Experiment 2: Data Augmentation + MobileNetV1 Fine-Tuning
+
+This experiment combined data augmentation with MobileNetV1 fine-tuning to investigate whether additional variation in the training images could improve generalization.
+
+### Test Performance
+
+| Metric | Result |
+|---|---:|
+| Accuracy | 77.33% |
+| Precision | 77.35% |
+| Recall | 75.94% |
+| F1-score | 76.64% |
+
+Compared with the original MobileNetV1 baseline accuracy of 76.78%, this experiment improved accuracy by 0.55 percentage points.
+
+However, its accuracy and F1-score were slightly lower than Experiment 1, indicating that augmentation did not provide an additional improvement under the evaluated configuration.
+
+---
+
+## Experiment 3: Grad-CAM Region-Focused Classification
+
+This experiment investigated whether focusing on image regions highlighted by Grad-CAM could improve structural damage classification.
+
+Grad-CAM was used to identify image regions influencing the model's predictions. These regions were then used in a region-focused classification approach.
+
+### Test Performance
+
+| Metric | Result |
+|---|---:|
+| Accuracy | 75.62% |
+| Precision | 73.84% |
+| Recall | 77.76% |
+| F1-score | 75.75% |
+
+Compared with the original MobileNetV1 baseline accuracy of 76.78%, the region-focused approach reduced accuracy by 1.16 percentage points.
+
+This suggests that restricting attention to Grad-CAM-highlighted regions did not improve classification performance under the evaluated configuration.
+
+---
+
 
 ## Experiment 4: EfficientNetB0 Transfer Learning
 
