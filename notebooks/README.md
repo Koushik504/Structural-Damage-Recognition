@@ -1,26 +1,22 @@
-\# Notebooks
 
+# Notebooks
 
+This folder contains Jupyter notebooks used for dataset exploration and analysis in the Structural Damage Recognition project.
 
-This folder contains the Jupyter notebooks used throughout the Structural Damage Recognition project.
+## Available Notebooks
 
+### 1. Dataset Analysis
 
+**File:** [dataset_analysis.ipynb](dataset_analysis.ipynb)
 
-Planned notebooks include:
+This notebook is used to explore and analyze the structural damage image dataset.
 
+## Model Training and Evaluation
 
+The project's model training, evaluation, and accuracy-improvement experiments are implemented in the `src/` directory.
 
-1\. Dataset Exploration
+For more information, see:
 
-2\. Data Preprocessing
-
-3\. Model Training
-
-4\. Model Evaluation
-
-5\. Results and Visualization
-
-
-
-The notebooks will document the experiments and analysis performed during the project.
-
+- [Main Project README](../README.md)
+- [Experimental Results](../results/README.md)
+- [Project Documentation](../docs/PROJECT_DOCUMENTATION.md)
