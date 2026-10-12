@@ -1,22 +1,27 @@
-\# Documentation
 
+# Project Documentation
 
+This folder contains the documentation for the Structural Damage Recognition project.
 
-This folder contains the documentation and presentation materials for the Structural Damage Recognition project.
+## Completed Documentation
 
+- [Project Documentation](PROJECT_DOCUMENTATION.md) — Complete project overview, dataset description, methodology, experimental results, discussion, conclusion, and future work.
 
+## Project Summary
 
-Planned contents include:
+The project evaluated six original baseline configurations and six additional accuracy-improvement experiments.
 
+**Best Model:** EfficientNetB0 (Experiment 4)
 
+- **Test Accuracy:** 87.26%
+- **F1-score:** 86.99%
 
-\- Project report
+## Additional Resources
 
-\- Presentation slides
+- [Main Project README](../README.md) — Project overview, implementation details, and setup instructions.
+- [Experimental Results](../results/README.md) — Detailed model performance comparisons.
 
-\- Project documentation
+## Future Materials
 
-\- Supporting materials
-
-
-
+- Project report (if required)
+- Presentation slides (if required)
