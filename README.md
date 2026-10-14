@@ -186,7 +186,7 @@ Dense(2, Softmax)
 
 # Models Evaluated
 
-Six model configurations were evaluated.
+The project evaluated 12 configurations in total: six original baseline models and six additional accuracy-improvement experiments. The original baseline models are described below, followed by the improvement experiments and their results.
 
 ## 1. K-Nearest Neighbors (KNN)
 
@@ -589,27 +589,38 @@ EfficientNetB0 achieved the highest test accuracy of 87.26%, improving by 10.48 
 
 The original six-model comparison and its Best Model section below remain historical baseline results.
 
----
+
 # Best Model
 
-MobileNetV1 was the best-performing model among the original six baseline configurations. After completing the six accuracy-improvement experiments, EfficientNetB0 (Experiment 4) achieved the best overall performance, with 87.26% test accuracy and 86.99% F1-score.
+## Best Overall Model: EfficientNetB0 (Experiment 4)
 
-```text
-Accuracy  : 76.78%
-Precision : 74.35%
-Recall    : 80.28%
-F1-score  : 77.20%
-```
+After evaluating six original baseline models and six accuracy-improvement experiments, **EfficientNetB0 (Experiment 4)** achieved the best overall performance on the held-out test set of 1,460 images.
 
-Among the original six baseline configurations, MobileNetV1 also achieved the highest recall for Class 1 (Undamaged):
+| Metric | Result |
+|---|---:|
+| Accuracy | **87.26%** |
+| Precision | 86.99% |
+| Recall | 86.99% |
+| F1-score | **86.99%** |
 
-```text
-Recall = 80.28%
-```
+The model achieved a test accuracy improvement of **10.48 percentage points** compared with the strongest original baseline, MobileNetV1.
 
-Among the original six baseline configurations, MobileNetV1 achieved the highest recall for Class 1 (Undamaged), at 80.28%. This metric measures how many actual undamaged images were correctly classified.
+## Best Original Baseline: MobileNetV1
+
+Among the original six baseline models, **MobileNetV1** achieved the highest test accuracy.
+
+| Metric | Result |
+|---|---:|
+| Accuracy | 76.78% |
+| Precision | 74.35% |
+| Recall | 80.28% |
+| F1-score | 77.20% |
+
+All precision, recall, and F1-score values use **Undamaged (Class 1)** as the positive class.
 
 ---
+
+
 
 # Confusion Matrices
 
@@ -748,25 +759,35 @@ results/model_comparison.csv
 # Project Structure
 
 ```text
-STRUCTURAL_DAMAGE/
+
+Structural-Damage-Recognition/
 │
 ├── DATA/
-│   ├── Dataset files
 │   └── README.md
 │
 ├── docs/
+│   ├── PROJECT_DOCUMENTATION.md
 │   └── README.md
 │
 ├── models/
 │   ├── inceptionv3.keras
-│   └── mobilenetv1.keras
+│   ├── mobilenetv1.keras
+│   ├── mobilenetv1_finetuned.keras
+│   └── mobilenetv1_gradcam_region.keras
 │
 ├── notebooks/
 │   ├── dataset_analysis.ipynb
-│   └── README
+│   └── README.md
 │
 ├── results/
+│   ├── augmentation/
 │   ├── classical_ml/
+│   ├── experiments/
+│   │   ├── efficientnetb0/
+│   │   ├── efficientnetb0_finetune/
+│   │   └── weighted_ensemble/
+│   ├── finetuning/
+│   ├── gradcam_region/
 │   ├── training/
 │   ├── model_comparison.csv
 │   ├── model_accuracy_comparison.png
@@ -774,22 +795,25 @@ STRUCTURAL_DAMAGE/
 │   └── README.md
 │
 ├── src/
-│   ├── batch_generator.py
-│   ├── classical_models.py
 │   ├── data_loader.py
-│   ├── evaluate.py
-│   ├── evaluate_mobilenetv1.py
-│   ├── extract_layer288_features.py
-│   ├── feature_extraction.py
-│   ├── models.py
-│   ├── plot_model_comparison.py
-│   ├── plot_training.py
-│   ├── predict.py
 │   ├── preprocessing.py
-│   ├── run_evaluation.py
+│   ├── models.py
 │   ├── train.py
-│   ├── train_layer288_svm.py
-│   └── train_mobilenetv1.py
+│   ├── train_mobilenetv1.py
+│   ├── train_mobilenetv1_finetuned.py
+│   ├── train_mobilenetv1_aug_finetuned.py
+│   ├── train_gradcam_region_model.py
+│   ├── train_efficientnet.py
+│   ├── train_efficientnet_finetune.py
+│   ├── evaluate_weighted_ensemble.py
+│   ├── evaluate_experiment.py
+│   ├── gradcam.py
+│   ├── region_focused_preprocessing.py
+│   ├── efficientnet_preprocessing.py
+│   ├── classical_models.py
+│   ├── run_evaluation.py
+│   ├── predict.py
+│   └── README.md
 │
 ├── .gitignore
 ├── README.md
@@ -992,10 +1016,10 @@ The evaluated approaches included classical machine learning classifiers using d
 Among the original six baseline configurations, **MobileNetV1 achieved the strongest performance**. However, after completing the six additional experiments, **EfficientNetB0 (Experiment 4) emerged as the best overall model**, achieving 87.26% test accuracy and 86.99% F1-score.
 
 ```text
-Accuracy  : 76.78%
-Precision : 74.35%
-Recall    : 80.28%
-F1-score  : 77.20%
+Accuracy  : 87.26%
+Precision : 86.99%
+Recall    : 86.99%
+F1-score  : 86.99%
 ```
 
 The experiments demonstrate that model architecture and feature representation have a significant effect on structural damage classification performance.
