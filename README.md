@@ -462,6 +462,24 @@ All models are evaluated on the same held-out test set.
 | **MobileNetV1** | **76.78%** | **74.35%** | **80.28%** | **77.20%** |
 | InceptionV3 Layer-288 + SVM | 59.59% | 58.72% | 58.88% | 58.80% |
 
+## Comparison with the Reference Paper
+
+The following table compares the accuracies reported by Ho and Troncoso in *Structural Damage Image Classification* with the results obtained from our six baseline models.
+
+| Model | Reference Paper Accuracy | Our Test Accuracy |
+|---|---:|---:|
+| K-Nearest Neighbors (KNN) | 53.7% | 61.44% |
+| Logistic Regression | 54.7% | 64.32% |
+| RBF-SVM | 50.7% | 65.96% |
+| MobileNetV1 | 67.0% | 76.78% |
+| InceptionV3 | 83.0% | 65.75% |
+| InceptionV3 Layer-288 + SVM | 75.0% | 59.59% |
+
+**Note:** The reference paper primarily reports validation accuracy, while our results are measured on a separate held-out test set of 1,460 images. The paper also reports 52.9% test accuracy for KNN, compared with its 53.7% validation accuracy. Because the datasets, preprocessing, feature representations, and evaluation procedures differ, these values should be treated as a comparison of reported results rather than a direct reproduction under identical conditions.
+
+**Reference:** Minnie Ho and Jorge Troncoso, [Structural Damage Image Classification](https://jorgeprojects.wordpress.com/wp-content/uploads/2019/11/structuraldamageimageclassificationreport.pdf), Table 1.
+
+
 ---
 
 # Additional Experiments (1–6)
